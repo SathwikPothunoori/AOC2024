@@ -15,29 +15,9 @@ public class Day2_1 {
             String line;
             int ans =0;
             while ((line = reader.readLine()) != null) {
-                // Split the line into two numbers
-                String[] parts = line.trim().split("\\s+");
-                int inc_dec = -1;
 
-                for (int i = 0; i < parts.length-1; i++) {
-                    int num1 = Integer.parseInt(parts[i]);
-                    int num2 = Integer.parseInt(parts[i+1]);
-                    int abs=Math.abs(num1-num2);
-
-                    if(inc_dec!=-1){
-                        if(num1 > num2 && inc_dec ==1) break;
-                        if(num1 < num2 && inc_dec ==0) break;
-                    }
-
-                    if(num1 > num2) inc_dec = 0;
-                    if(num1 < num2) inc_dec = 1;
-
-
-                    if(!(abs>0 && abs<=3)){
-                        break;
-                    }
-
-                    if(i== parts.length-2) ans++;
+                if (isSafe(line)) {
+                    ans++;
                 }
             }
 
@@ -46,5 +26,37 @@ public class Day2_1 {
         } catch (IOException e) {
             System.err.println("Error reading or writing files: " + e.getMessage());
         }
+    }
+    private static boolean isSafe(String report) {
+        String[] levelsStr = report.trim().split("\\s+");
+        int[] levels = new int[levelsStr.length];
+
+        for (int i = 0; i < levelsStr.length; i++) {
+            levels[i] = Integer.parseInt(levelsStr[i]);
+        }
+
+        return isStrictlyIncreasingOrDecreasing(levels);
+    }
+
+
+    private static boolean isStrictlyIncreasingOrDecreasing(int[] levels) {
+        boolean increasing = true;
+        boolean decreasing = true;
+
+        for (int i = 1; i < levels.length; i++) {
+            int diff = levels[i] - levels[i - 1];
+
+            if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
+                return false;
+            }
+
+            if (diff < 0 || diff==0) {
+                increasing = false;
+            } else if (diff > 0 || diff==0) {
+                decreasing = false;
+            }
+        }
+
+        return increasing || decreasing;
     }
 }

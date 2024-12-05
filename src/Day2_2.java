@@ -15,7 +15,7 @@ public class Day2_2 {
             String line;
             int ans =0;
             while ((line = reader.readLine()) != null) {
-                // Split the line into two numbers
+
                 if (isSafe(line) ||canBeMadeSafe(line)) {
                     ans++;
                 }
@@ -26,11 +26,11 @@ public class Day2_2 {
         } catch (IOException e) {
             System.err.println("Error reading or writing files: " + e.getMessage());
         }
-    }private static boolean isSafe(String report) {
+    }
+    private static boolean isSafe(String report) {
         String[] levelsStr = report.trim().split("\\s+");
         int[] levels = new int[levelsStr.length];
 
-        // Convert levels to integers
         for (int i = 0; i < levelsStr.length; i++) {
             levels[i] = Integer.parseInt(levelsStr[i]);
         }
@@ -42,12 +42,11 @@ public class Day2_2 {
         String[] levelsStr = report.trim().split("\\s+");
         int[] levels = new int[levelsStr.length];
 
-        // Convert levels to integers
         for (int i = 0; i < levelsStr.length; i++) {
             levels[i] = Integer.parseInt(levelsStr[i]);
         }
 
-        // Try removing each level and check if the report becomes safe
+        // try by removing each level and check if the report becomes safe
         for (int i = 0; i < levels.length; i++) {
             int[] modifiedLevels = new int[levels.length - 1];
             int index = 0;
@@ -59,7 +58,7 @@ public class Day2_2 {
             }
 
             if (isStrictlyIncreasingOrDecreasing(modifiedLevels)) {
-                return true; // Report can be made safe by removing one level
+                return true;
             }
         }
 
@@ -74,7 +73,7 @@ public class Day2_2 {
             int diff = levels[i] - levels[i - 1];
 
             if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
-                return false; // Difference outside the range [1, 3]
+                return false;
             }
 
             if (diff < 0 || diff==0) {
@@ -84,8 +83,6 @@ public class Day2_2 {
             }
         }
 
-        return increasing || decreasing; // Safe if strictly increasing or strictly decreasing
+        return increasing || decreasing;
     }
-
-
 }
